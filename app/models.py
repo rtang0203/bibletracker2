@@ -3,6 +3,7 @@
 from datetime import datetime, date
 import uuid
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import UserMixin  # Import UserMixin for flask-login
 from app import db  # Import db from app package
 
 # Helper table for many-to-many relationship between users and groups
@@ -13,7 +14,7 @@ group_members = db.Table('group_members',
     db.Column('is_admin', db.Boolean, default=False)
 )
 
-class User(db.Model):
+class User(UserMixin, db.Model):  # Inherit from UserMixin
     __tablename__ = 'users'
     
     id = db.Column(db.Integer, primary_key=True)

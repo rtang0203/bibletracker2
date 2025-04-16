@@ -1,8 +1,12 @@
-# Python
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
+
+# C extensions
 *.so
+
+# Distribution / packaging
 .Python
 env/
 build/
@@ -20,20 +24,15 @@ var/
 .installed.cfg
 *.egg
 
-# Virtual Environment
+# Virtual environments
 venv/
 ENV/
+.venv/
 
 # Environment variables
 .env
 
-# IDE
-.idea/
-.vscode/
-*.swp
-*.swo
-
-# Flask
+# Flask stuff
 instance/
 .webassets-cache
 
@@ -42,4 +41,26 @@ instance/
 *.sqlite3
 
 # Logs
-*.log 
+*.log
+
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# MacOS
+.DS_Store
+
+# Test and coverage
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/ 
