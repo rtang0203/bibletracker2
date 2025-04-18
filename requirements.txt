@@ -1,11 +1,11 @@
-Flask
-Flask-SQLAlchemy
-SQLAlchemy
+Flask==2.0.1
+Flask-SQLAlchemy==2.5.1
+SQLAlchemy==1.4.23
 Flask-Migrate
-Flask-Login
+Flask-Login==0.5.0
 python-dotenv
-Werkzeug
-Flask-WTF
-
+Werkzeug==2.0.1
+Flask-WTF==1.0.1
+email_validator
 
 

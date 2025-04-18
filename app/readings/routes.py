@@ -1,7 +1,10 @@
 # Reading tracking routes
+# app/readings/routes.py
+from flask import render_template
+from flask_login import login_required
 from app.readings import readings_bp
 
-# Placeholder - we'll add routes later
-@readings_bp.route('/test')
-def test():
-    return "Readings blueprint is working" 
+@readings_bp.route('/')
+@login_required
+def index():
+    return render_template('readings/index.html', title='My Reading Tracker')

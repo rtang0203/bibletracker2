@@ -14,7 +14,14 @@ def login():
     
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
+        # First try to find user by username
+        user = User.query.filter_by(username=form.username_or_email.data).first()
+
+        # If not found, try by email
+        if user is None:
+            user = User.query.filter_by(email=form.username_or_email.data).first()
+
+        # Check if user exists and password is correct
         if user is None or not user.check_password(form.password.data):
             flash('Invalid username or password')
             return redirect(url_for('auth.login'))

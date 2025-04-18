@@ -1,7 +1,10 @@
 # Group management routes
+# app/groups/routes.py
+from flask import render_template
+from flask_login import login_required
 from app.groups import groups_bp
 
-# Placeholder - we'll add routes later
-@groups_bp.route('/test')
-def test():
-    return "Groups blueprint is working" 
+@groups_bp.route('/my-groups')
+@login_required
+def my_groups():
+    return render_template('groups/my_groups.html', title='My Groups')
