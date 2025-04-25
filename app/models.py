@@ -10,7 +10,7 @@ from app import db  # Import db from app package
 group_members = db.Table('group_members',
     db.Column('user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True),
     db.Column('group_id', db.Integer, db.ForeignKey('groups.id'), primary_key=True),
-    db.Column('joined_at', db.DateTime, default=datetime.utcnow),
+    db.Column('joined_at', db.DateTime, default=db.func.now()),
     db.Column('is_admin', db.Boolean, default=False)
 )
 
@@ -21,7 +21,7 @@ class User(UserMixin, db.Model):  # Inherit from UserMixin
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(256), nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=db.func.now())
     
     # Relationships
     groups = db.relationship('Group', secondary=group_members, 
@@ -44,7 +44,7 @@ class Group(db.Model):
     name = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text)
     group_code = db.Column(db.String(10), unique=True, nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=db.func.now())
     is_data_public = db.Column(db.Boolean, default=True)
     
     # Foreign Keys

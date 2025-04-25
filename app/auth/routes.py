@@ -3,9 +3,9 @@
 from flask import render_template, redirect, url_for, flash, request
 from flask_login import login_user, logout_user, current_user, login_required
 from app import db
-from app.auth import auth_bp
-from app.models import User
-from app.auth.forms import LoginForm, RegistrationForm  # We'll create these forms next
+from . import auth_bp # Relative import for blueprint
+from ..models import User # Relative import for models
+from .forms import LoginForm, RegistrationForm  # Relative import for forms
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():

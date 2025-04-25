@@ -1,0 +1,56 @@
+<!-- app/templates/groups/view_group.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row mb-4">
+        <div class="col">
+            <h1>{{ group.name }}</h1>
+            <p class="text-muted">Group Code: {{ group.group_code }}</p>
+            <p>{{ group.description }}</p>
+        </div>
+    </div>
+    
+    <div class="row mb-4">
+        <div class="col">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Members ({{ group.members.count() }})</h5>
+                    {% if group.created_by != current_user.id %}
+                    <a href="{{ url_for('groups.leave_group', group_id=group.id) }}" class="btn btn-outline-danger btn-sm" 
+                       onclick="return confirm('Are you sure you want to leave this group?')">
+                        Leave Group
+                    </a>
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        {% for member in group.members %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ member.username }}
+                            {% if member.id == group.created_by %}
+                            <span class="badge bg-primary">Creator</span>
+                            {% endif %}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Bible Reading Status</h5>
+                </div>
+                <div class="card-body">
+                    <p>Reading status tracking will be implemented here.</p>
+                    <a href="{{ url_for('groups.my_groups') }}" class="btn btn-primary">Back to My Groups</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

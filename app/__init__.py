@@ -23,21 +23,21 @@ def create_app(config_class=None):
     db.init_app(app)
     login_manager.init_app(app)
     
-    # Import models and register user loader here to avoid circular import
+    # Import models and register user loader AFTER initializing extensions
     from app.models import User
 
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))
 
-    # Register blueprints
-    from app.auth.routes import auth_bp
+    # Register blueprints AFTER initializing extensions and defining models
+    from app.auth import auth_bp
     app.register_blueprint(auth_bp)
     
-    from app.groups.routes import groups_bp
+    from app.groups import groups_bp
     app.register_blueprint(groups_bp)
     
-    from app.readings.routes import readings_bp
+    from app.readings import readings_bp
     app.register_blueprint(readings_bp)
     
     # Create database tables

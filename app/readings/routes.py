@@ -2,7 +2,7 @@
 # app/readings/routes.py
 from flask import render_template
 from flask_login import login_required
-from app.readings import readings_bp
+from . import readings_bp
 
 @readings_bp.route('/')
 @login_required
