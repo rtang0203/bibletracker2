@@ -2,7 +2,76 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Bible Reading Tracker</h1>
-<p>Welcome, {{ current_user.username }}!</p>
-<p>This page will show your daily reading tracker.</p>
+<div class="container">
+    <h1 class="mb-4">Bible Reading Tracker</h1>
+    <p>Welcome, {{ current_user.username }}!</p>
+
+    {# Centered "Mark All Read" button row #}
+    {% if user_groups %}
+    <div class="row justify-content-center mb-4">
+        <div class="col-auto">
+            <form method="post" action="{{ url_for('readings.mark_all_read') }}">
+                {{ mark_all_form.hidden_tag() }} {# Use hidden_tag() for CSRF #}
+                <button type="submit" class="btn btn-lg btn-success">I read the Bible today</button> {# Renamed and resized #}
+            </form>
+        </div>
+    </div>
+    {% endif %}
+    
+    <div class="row mb-4">
+        <div class="col">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0">Today's Reading Status ({{ today.strftime('%Y-%m-%d') }})</h4>
+                    {# Removed the button from header #}
+                </div>
+                <div class="card-body">
+                    {% if user_groups %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Group</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for group in user_groups %}
+                                    <tr>
+                                        <td>{{ group.name }}</td>
+                                        <td>
+                                            {% if group.id in today_readings and today_readings[group.id].has_read %}
+                                                <span class="badge bg-success">Read</span>
+                                            {% else %}
+                                                <span class="badge bg-warning text-dark">Not Read</span> {# Added text-dark for visibility #}
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <a href="{{ url_for('readings.mark_reading', group_id=group.id) }}" class="btn btn-sm btn-primary">
+                                                Update
+                                            </a>
+                                            <a href="{{ url_for('readings.reading_history', group_id=group.id) }}" class="btn btn-sm btn-outline-secondary">
+                                                History
+                                            </a>
+                                            <a href="{{ url_for('groups.view_group', group_id=group.id) }}" class="btn btn-sm btn-outline-info">
+                                                Group Details
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-info">
+                            You are not a member of any groups yet. 
+                            <a href="{{ url_for('groups.my_groups') }}">Join or create a group</a> to start tracking your Bible reading!
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

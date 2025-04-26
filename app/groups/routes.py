@@ -1,12 +1,14 @@
 # Group management routes
 
 # app/groups/routes.py
+from datetime import date # Add date import
 from flask import render_template, redirect, url_for, flash, request
 from flask_login import current_user, login_required
 from app import db
 from app.groups import groups_bp
-from app.models import Group, User, group_members
+from app.models import Group, User, group_members, ReadingEntry # Add ReadingEntry import
 from .forms import CreateGroupForm, JoinGroupForm # Use relative import
+from ..readings.forms import EmptyForm # Import EmptyForm
 
 @groups_bp.route('/my-groups')
 @login_required
@@ -72,22 +74,47 @@ def join_group():
 @login_required
 def view_group(group_id):
     group = Group.query.get_or_404(group_id)
+    today = date.today()
+    reading_status = {}
+    can_see_reading_status = False
+    
+    # Form for the leave group button
+    leave_form = EmptyForm()
     
     # Check if user is a member of this group
     if group not in current_user.groups:
         flash('You are not a member of this group.')
         return redirect(url_for('groups.my_groups'))
     
-    # Check if user is an admin of this group
+    # Check if user is an admin of this group (needed for displaying status)
     is_admin = db.session.query(group_members).filter(
         group_members.c.user_id == current_user.id,
         group_members.c.group_id == group.id,
         group_members.c.is_admin == True
     ).first() is not None
     
-    return render_template('groups/view_group.html', title=group.name, group=group, is_admin=is_admin)
+    # Determine if user can see reading status
+    if is_admin or group.is_data_public:
+        can_see_reading_status = True
+        # Get all entries for today for this group
+        today_entries = ReadingEntry.query.filter_by(
+            group_id=group_id,
+            date=today
+        ).all()
+        # Create a dictionary of user_id: has_read
+        reading_status = {entry.user_id: entry.has_read for entry in today_entries}
+    
+    return render_template('groups/view_group.html', 
+                          title=group.name, 
+                          group=group, 
+                          is_admin=is_admin, # Still useful for other potential admin actions
+                          can_see_reading_status=can_see_reading_status,
+                          reading_status=reading_status,
+                          today=today,
+                          User=User,
+                          leave_form=leave_form) # Pass leave_form to template
 
-@groups_bp.route('/leave/<int:group_id>')
+@groups_bp.route('/leave/<int:group_id>', methods=['POST'])
 @login_required
 def leave_group(group_id):
     group = Group.query.get_or_404(group_id)
