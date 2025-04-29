@@ -2,92 +2,82 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container">
-    <div class="row mb-4">
-        <div class="col">
-            <h1>{{ group.name }}</h1>
-            <p class="text-muted">Group Code: {{ group.group_code }}</p>
-            <p>{{ group.description }}</p>
-        </div>
+{# Main container with Red Border #}
+<div class="container-bordered"> {# Applied class #}
+
+    {# Group Info Section #}
+    <div style="margin-bottom: 15px;">
+        <h1>{{ group.name }}</h1>
+        <p class="text-muted">Group Code: {{ group.group_code }}</p>
+        <p>{{ group.description }}</p>
+        <hr>
     </div>
-    
-    <div class="row mb-4">
-        <div class="col-md-6 mb-3 mb-md-0">
-            <div class="card h-100">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">Members ({{ group.members.count() }})</h5>
-                    {% if group.created_by != current_user.id %}
-                        <form method="post" action="{{ url_for('groups.leave_group', group_id=group.id) }}" 
-                              onsubmit="return confirm('Are you sure you want to leave this group?');" 
-                              style="display: inline;">
-                            {{ leave_form.hidden_tag() }}
-                            <button type="submit" class="btn btn-outline-danger btn-sm">Leave Group</button>
-                        </form>
-                    {% endif %}
-                </div>
-                <div class="card-body">
-                    <ul class="list-group list-group-flush">
-                        {% for member in group.members.order_by(User.username) %}
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            {{ member.username }}
-                            <span>
-                                {% if member.id == group.created_by %}
-                                <span class="badge bg-primary ms-2">Creator</span>
-                                {% endif %}
-                                {% if is_admin and member.id == current_user.id %}
-                                <span class="badge bg-info ms-2">Admin</span>
-                                {% endif %}
-                            </span>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-        </div>
+
+    {# Members Section - Styled Panel #}
+    <div class="panel"> {# Applied class #}
+        <h5 style="margin-bottom: 10px;">Members ({{ group.members.count() }})</h5>
+        {% if group.created_by != current_user.id %}
+            <form method="post" action="{{ url_for('groups.leave_group', group_id=group.id) }}" 
+                  onsubmit="return confirm('Are you sure you want to leave this group?');" 
+                  style="display: inline-block; margin-bottom: 10px;">
+                {{ leave_form.hidden_tag() }}
+                <button type="submit">Leave Group</button>
+            </form>
+            <hr style="margin-top: 5px; margin-bottom: 10px;">
+        {% endif %}
+        <ul> 
+            {% for member in group.members.order_by(User.username) %}
+            <li style="margin-bottom: 5px;">
+                {{ member.username }}
+                {% if member.id == group.created_by %}
+                    (Creator)
+                {% endif %}
+                {% if is_admin and member.id == current_user.id %}
+                    (Admin)
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    {# Reading Status Section - Styled Panel #}
+    <div class="panel"> {# Applied class #}
+        <h5>
+            Today's Reading Status ({{ today.strftime('%Y-%m-%d') }})
+            <span style="font-size: 0.8em; margin-left: 15px;">
+                <a href="{{ url_for('readings.reading_history', group_id=group.id) }}">View History</a>
+            </span>
+        </h5>
         
-        <div class="col-md-6">
-            <div class="card h-100">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                     <h5 class="mb-0">Today's Reading Status ({{ today.strftime('%Y-%m-%d') }})</h5>
-                     <a href="{{ url_for('readings.reading_history', group_id=group.id) }}" class="btn btn-outline-secondary btn-sm">
-                         View History
-                     </a>
-                </div>
-                <div class="card-body">
-                    {% if can_see_reading_status %}
-                        <ul class="list-group list-group-flush">
-                             {% for member in group.members.order_by(User.username) %}
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    {{ member.username }}
-                                    <span>
-                                    {% if member.id in reading_status %}
-                                        {% if reading_status[member.id] %}
-                                            <span class="badge bg-success">Read</span>
-                                        {% else %}
-                                            <span class="badge bg-warning text-dark">Not Read</span>
-                                        {% endif %}
-                                    {% else %}
-                                        <span class="badge bg-secondary">No Status</span>
-                                    {% endif %}
-                                    </span>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    {% else %}
-                        <div class="alert alert-info" role="alert">
-                            Reading status is private for this group. Only admins can view the status of all members.
-                        </div>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
+        {% if can_see_reading_status %}
+            <ul> 
+                 {% for member in group.members.order_by(User.username) %}
+                    <li>
+                        {{ member.username }}: 
+                        {% if member.id in reading_status %}
+                            {% if reading_status[member.id] %}
+                                <span class="status-read">Read</span>
+                            {% else %}
+                                <span class="status-not-read">Not Read</span>
+                            {% endif %}
+                        {% else %}
+                            <span class="text-muted">No Status</span>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-muted">
+                Reading status is private for this group. Only admins can view the status of all members.
+            </p>
+        {% endif %}
     </div>
-    
-    <div class="row mt-4">
-        <div class="col">
-             <a href="{{ url_for('groups.my_groups') }}" class="btn btn-primary">Back to My Groups</a>
-             <a href="{{ url_for('readings.index') }}" class="btn btn-secondary">Reading Dashboard</a>
-        </div>
+
+    {# Navigation Buttons #}
+    <div>
+         <a href="{{ url_for('groups.my_groups') }}">Back to My Groups</a> |
+         <a href="{{ url_for('readings.index') }}">Reading Dashboard</a>
     </div>
-</div>
+
+</div> {# End container-bordered #}
 {% endblock %}

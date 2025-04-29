@@ -2,43 +2,42 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-8">
-        <div class="card">
-            <div class="card-header">
-                <h3>Create a Bible Study Group</h3>
-            </div>
-            <div class="card-body">
-                <form method="post" action="">
-                    {{ form.hidden_tag() }}
-                    <div class="mb-3">
-                        {{ form.name.label(class="form-label") }}
-                        {{ form.name(class="form-control") }}
-                        {% for error in form.name.errors %}
-                        <span class="text-danger">{{ error }}</span>
-                        {% endfor %}
-                    </div>
-                    <div class="mb-3">
-                        {{ form.description.label(class="form-label") }}
-                        {{ form.description(class="form-control", rows=4) }}
-                        {% for error in form.description.errors %}
-                        <span class="text-danger">{{ error }}</span>
-                        {% endfor %}
-                    </div>
-                    <div class="mb-3 form-check">
-                        {{ form.is_data_public(class="form-check-input") }}
-                        {{ form.is_data_public.label(class="form-check-label") }}
-                        <small class="form-text text-muted d-block">
-                            If checked, all members can see each other's reading status.
-                        </small>
-                    </div>
-                    <div class="d-grid gap-2">
-                        {{ form.submit(class="btn btn-primary") }}
-                        <a href="{{ url_for('groups.my_groups') }}" class="btn btn-secondary">Cancel</a>
-                    </div>
-                </form>
-            </div>
+{# Centering container with border #}
+<div class="container-bordered" style="max-width: 500px;"> {# Adjusted max-width #}
+    <h3>Create a Bible Study Group</h3>
+    <hr>
+    <form method="post" action="">
+        {{ form.hidden_tag() }}
+        
+        <div>
+            {{ form.name.label }}<br>
+            {{ form.name() }}
+            {% for error in form.name.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
         </div>
-    </div>
+        
+        <div style="margin-top: 15px;">
+            {{ form.description.label }}<br>
+            {{ form.description(rows=4) }} {# Basic textarea #}
+            {% for error in form.description.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+        
+        <div style="margin-top: 15px;">
+            {{ form.is_data_public() }} {# Checkbox #}
+            {{ form.is_data_public.label }}
+            <br>
+            <small class="text-muted">
+                If checked, all members can see each other's reading status.
+            </small>
+        </div>
+        
+        <div style="margin-top: 20px;">
+            {{ form.submit() }}
+            <a href="{{ url_for('groups.my_groups') }}" style="margin-left: 10px;">Cancel</a>
+        </div>
+    </form>
 </div>
 {% endblock %}

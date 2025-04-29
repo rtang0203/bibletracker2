@@ -2,29 +2,24 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">
-                    <h3>Update Reading Status</h3>
-                    <h5 class="text-muted">{{ group.name }}</h5>
-                </div>
-                <div class="card-body">
-                    <form method="post">
-                        {{ form.hidden_tag() }}
-                        <div class="form-check form-switch mb-4">
-                            {{ form.has_read(class="form-check-input", role="switch") }}
-                            {{ form.has_read.label(class="form-check-label") }}
-                        </div>
-                        <div class="d-grid gap-2">
-                            {{ form.submit(class="btn btn-primary") }}
-                            <a href="{{ url_for('readings.index') }}" class="btn btn-outline-secondary">Cancel</a>
-                        </div>
-                    </form>
-                </div>
-            </div>
+{# Centering container with border #}
+<div class="container-bordered" style="max-width: 450px;"> {# Adjusted max-width #}
+    <h3 style="text-align: center;">Update Reading Status</h3>
+    <p class="text-muted" style="text-align: center;">Group: {{ group.name }}</p>
+    <form method="post" style="margin-top: 20px;">
+        {{ form.hidden_tag() }}
+        
+        {# Centered Checkbox #}
+        <div style="text-align: center; margin-bottom: 20px;">
+            {{ form.has_read() }}
+            {{ form.has_read.label }}
         </div>
-    </div>
+
+        {# Centered Buttons #}
+        <div style="text-align: center;">
+            {{ form.submit() }}
+            <a href="{{ url_for('readings.index') }}" style="margin-left: 10px;">Cancel</a>
+        </div>
+    </form>
 </div>
 {% endblock %}

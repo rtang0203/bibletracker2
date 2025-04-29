@@ -2,38 +2,34 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container">
-    <h1 class="mb-4">My Bible Study Groups</h1>
-    
-    <div class="row mb-4">
-        <div class="col">
-            <a href="{{ url_for('groups.create_group') }}" class="btn btn-primary">Create New Group</a>
-            <a href="{{ url_for('groups.join_group') }}" class="btn btn-outline-primary">Join Existing Group</a>
-        </div>
+{# Centering container with border #}
+<div class="container-bordered">
+    <h1>My Bible Study Groups</h1>
+    <hr>
+    <div style="margin-bottom: 20px;">
+        <a href="{{ url_for('groups.create_group') }}">Create New Group</a> |
+        <a href="{{ url_for('groups.join_group') }}">Join Existing Group</a>
     </div>
-    
+
     {% if groups %}
-    <div class="row">
-        {% for group in groups %}
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h5 class="card-title">{{ group.name }}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Group Code: {{ group.group_code }}</h6>
-                    <p class="card-text">{{ group.description }}</p>
-                    <p class="card-text"><small class="text-muted">{{ group.members.count() }} members</small></p>
+        <div>
+            {% for group in groups %}
+                <div style="border: 1px solid #AAAAAA; padding: 15px; margin-bottom: 15px;">
+                    <h3>{{ group.name }}</h3>
+                    <p class="text-muted">Group Code: {{ group.group_code }}</p>
+                    <p>{{ group.description }}</p>
+                    <p><small class="text-muted">{{ group.members.count() }} members</small></p>
+                    <a href="{{ url_for('groups.view_group', group_id=group.id) }}">View Group</a>
                 </div>
-                <div class="card-footer">
-                    <a href="{{ url_for('groups.view_group', group_id=group.id) }}" class="btn btn-sm btn-primary">View Group</a>
-                </div>
-            </div>
+            {% else %}
+              {# This else should be outside the loop for the main condition #}
+            {% endfor %}
         </div>
-        {% endfor %}
-    </div>
     {% else %}
-    <div class="alert alert-info" role="alert">
-        You haven't joined any groups yet. Create a new group or join an existing one!
-    </div>
+        {# Simplified message #}
+        <p>
+            You haven't joined any groups yet. Create a new group or join an existing one!
+        </p>
     {% endif %}
 </div>
 {% endblock %}

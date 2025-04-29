@@ -2,42 +2,41 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="text-center">Sign In</h3>
-            </div>
-            <div class="card-body">
-                <form action="" method="post" novalidate>
-                    {{ form.hidden_tag() }}
-                    <div class="mb-3">
-                        {{ form.username_or_email.label(class="form-label") }}
-                        {{ form.username_or_email(class="form-control") }}
-                        {% for error in form.username_or_email.errors %}
-                        <div class="text-danger">{{ error }}</div>
-                        {% endfor %}
-                    </div>
-                    <div class="mb-3">
-                        {{ form.password.label(class="form-label") }}
-                        {{ form.password(class="form-control") }}
-                        {% for error in form.password.errors %}
-                        <div class="text-danger">{{ error }}</div>
-                        {% endfor %}
-                    </div>
-                    <div class="mb-3 form-check">
-                        {{ form.remember_me(class="form-check-input") }}
-                        {{ form.remember_me.label(class="form-check-label") }}
-                    </div>
-                    <div class="d-grid">
-                        {{ form.submit(class="btn btn-primary") }}
-                    </div>
-                </form>
-            </div>
-            <div class="card-footer text-center">
-                <p>New User? <a href="{{ url_for('auth.register') }}">Click to Register!</a></p>
-            </div>
+{# Centering container with border #}
+<div class="container-bordered" style="max-width: 450px;"> {# Adjusted max-width #}
+    <h3 style="text-align: center;">Sign In</h3>
+    <hr>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        
+        <div>
+            {{ form.username_or_email.label }}<br>
+            {{ form.username_or_email() }}
+            {% for error in form.username_or_email.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
         </div>
-    </div>
+        
+        <div style="margin-top: 15px;">
+            {{ form.password.label }}<br>
+            {{ form.password() }}
+            {% for error in form.password.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+        
+        <div style="margin-top: 15px;">
+            {{ form.remember_me() }} {# Render checkbox #}
+            {{ form.remember_me.label }}
+        </div>
+        
+        <div style="margin-top: 20px;">
+            {{ form.submit() }}
+        </div>
+    </form>
+    <hr>
+    <p style="text-align: center;">
+        New User? <a href="{{ url_for('auth.register') }}">Click to Register!</a>
+    </p>
 </div>
 {% endblock %}

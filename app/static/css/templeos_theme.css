@@ -1,0 +1,192 @@
+/* TempleOS-inspired Theme */
+
+body {
+    background-color: #0000AA; /* TempleOS Blue */
+    color: #CCCCCC; /* Light Gray */
+    font-family: 'Courier New', Courier, monospace; /* Basic fixed-width font */
+    font-size: 16px;
+    margin: 10px;
+    padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #FFFFFF; /* White */
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+}
+
+a {
+    color: #55FFFF; /* Cyan */
+    text-decoration: none;
+}
+
+a:hover {
+    color: #FFFF55; /* Yellow */
+    text-decoration: underline;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid #AAAAAA; /* Gray line */
+}
+
+/* Basic Form Styling */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+textarea {
+    background-color: #000000; /* Black background */
+    color: #CCCCCC; /* Light Gray text */
+    border: 1px solid #AAAAAA; /* Gray border */
+    padding: 5px;
+    font-family: inherit;
+    font-size: inherit;
+    margin-bottom: 10px;
+    display: block; /* Ensure they take block space */
+    width: 95%; /* Make them wide-ish */
+    max-width: 400px; /* But not too wide */
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #FFFFFF; /* White */
+}
+
+button,
+input[type="submit"] {
+    background-color: #AAAAAA; /* Gray */
+    color: #000000; /* Black */
+    border: 1px outset #FFFFFF;
+    padding: 5px 10px;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+button:hover,
+input[type="submit"]:hover {
+    background-color: #CCCCCC; /* Light Gray */
+}
+
+input[type="checkbox"] {
+   margin-right: 5px;
+}
+
+/* Basic Table Styling */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 1em;
+    border: 1px solid #AAAAAA;
+}
+
+th, td {
+    border: 1px solid #AAAAAA;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #555555; /* Dark Gray */
+    color: #FFFFFF; /* White */
+}
+
+/* Basic List Styling */
+ul, ol {
+    margin-left: 20px;
+    padding-left: 0;
+}
+
+li {
+    margin-bottom: 5px;
+}
+
+/* Simple Navbar */
+nav {
+    background-color: #0000AA;
+    padding: 10px 0;
+    border-bottom: 1px solid #AAAAAA;
+    margin-bottom: 20px;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: right;
+}
+
+nav li {
+    display: inline;
+    margin-left: 15px;
+}
+
+/* Simple Alert/Flash Message */
+.flash-message {
+    background-color: #555555;
+    color: #FFFF55; /* Yellow text */
+    border: 1px solid #AAAAAA;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+/* Utility */
+.text-danger { /* For form errors */
+    color: #FF5555; /* Red */
+    font-size: 0.9em;
+    display: block;
+    margin-top: -5px;
+    margin-bottom: 10px;
+}
+
+.text-muted { /* Less important text */
+   color: #AAAAAA;
+}
+
+/* Style for the big button on the main page */
+.big-button {
+    display: inline-block; 
+    padding: 15px 30px; /* Keep larger padding */
+    /* Use styles similar to standard buttons */
+    background-color: #AAAAAA; /* Gray */
+    color: #000000; /* Black */
+    border: 1px outset #FFFFFF;
+    text-decoration: none;
+    font-size: 1.2em; /* Keep slightly larger font */
+    cursor: pointer;
+}
+
+.big-button:hover {
+    /* Use hover styles similar to standard buttons */
+    background-color: #CCCCCC; /* Light Gray */
+    color: #000000; /* Black */
+    border-color: #FFFFFF;
+}
+
+/* Styles for reading status text */
+.status-read {
+    color: #55FF55; /* Green */
+    font-weight: bold;
+}
+
+.status-not-read {
+    color: #FF5555; /* Red */
+}
+
+/* Centered container with red border */
+.container-bordered {
+    max-width: 700px; /* Adjust as needed */
+    margin: 20px auto; 
+    padding: 15px; 
+    border: 3px solid #FF5555; /* Red border */
+}
+
+/* Panel style for sections */
+.panel {
+    background-color: #222222; /* Dark gray background */
+    border: 1px solid #AAAAAA; /* Gray border */
+    padding: 15px; /* Increased padding slightly */
+    margin-bottom: 20px;
+} 

@@ -2,32 +2,29 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header">
-                <h3>Join a Bible Study Group</h3>
-            </div>
-            <div class="card-body">
-                <form method="post" action="">
-                    {{ form.hidden_tag() }}
-                    <div class="mb-4">
-                        <p>Enter the 8-character group code provided by the group creator.</p>
-                    </div>
-                    <div class="mb-3">
-                        {{ form.group_code.label(class="form-label") }}
-                        {{ form.group_code(class="form-control", placeholder="e.g. ABC12345") }}
-                        {% for error in form.group_code.errors %}
-                        <span class="text-danger">{{ error }}</span>
-                        {% endfor %}
-                    </div>
-                    <div class="d-grid gap-2">
-                        {{ form.submit(class="btn btn-primary") }}
-                        <a href="{{ url_for('groups.my_groups') }}" class="btn btn-secondary">Cancel</a>
-                    </div>
-                </form>
-            </div>
+{# Centering container with border #}
+<div class="container-bordered" style="max-width: 450px;"> {# Adjusted max-width #}
+    <h3>Join a Bible Study Group</h3>
+    <hr>
+    <form method="post" action="">
+        {{ form.hidden_tag() }}
+        
+        <div style="margin-bottom: 15px;">
+            <p>Enter the 8-character group code provided by the group creator.</p>
         </div>
-    </div>
+        
+        <div>
+            {{ form.group_code.label }}<br>
+            {{ form.group_code(placeholder="e.g. ABC12345") }}
+            {% for error in form.group_code.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+        
+        <div style="margin-top: 20px;">
+            {{ form.submit() }}
+            <a href="{{ url_for('groups.my_groups') }}" style="margin-left: 10px;">Cancel</a>
+        </div>
+    </form>
 </div>
 {% endblock %}
