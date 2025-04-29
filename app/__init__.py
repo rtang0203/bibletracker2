@@ -43,6 +43,9 @@ def create_app(config_class=None):
     
     from app.readings import readings_bp
     app.register_blueprint(readings_bp)
+
+    from app.main import main_bp
+    app.register_blueprint(main_bp)
     
     # Create database tables
     with app.app_context():
