@@ -4,6 +4,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_wtf.csrf import CSRFProtect
+import os
 
 # Initialize extensions
 db = SQLAlchemy()
@@ -16,12 +17,19 @@ login_manager.login_message = 'Please log in to access this page.'
 def create_app(config_class=None):
     app = Flask(__name__)
     
-    # Load configuration
-    if config_class is None:
+    # Load configuration based on FLASK_CONFIG_TYPE environment variable
+    config_type = os.environ.get('FLASK_CONFIG_TYPE', 'development') # Default to development
+    if config_type == 'production':
+        app.config.from_object('app.config.ProductionConfig')
+    elif config_type == 'development':
         app.config.from_object('app.config.DevelopmentConfig')
-    else:
-        app.config.from_object(config_class)
-    
+    else: # Fallback or if a specific class is passed (e.g. for testing)
+        if config_class:
+            app.config.from_object(config_class)
+        else:
+            # Default to DevelopmentConfig if FLASK_CONFIG_TYPE is invalid and no class is passed
+            app.config.from_object('app.config.DevelopmentConfig')
+
     # Initialize extensions with app
     db.init_app(app)
     login_manager.init_app(app)
@@ -47,8 +55,8 @@ def create_app(config_class=None):
     from app.main import main_bp
     app.register_blueprint(main_bp)
     
-    # Create database tables
-    with app.app_context():
-        db.create_all()
+    # Create database tables # REMOVED: db.create_all()
+    # with app.app_context():
+    #     db.create_all() # This should be handled by Flask-Migrate commands like `flask db upgrade`
     
     return app

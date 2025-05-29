@@ -14,5 +14,5 @@ class DevelopmentConfig(Config):
 class ProductionConfig(Config):
     """Production configuration"""
     DEBUG = False
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
-        'sqlite:///bible_reading_app.db'
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+    # Ensure DATABASE_URL is set in production, otherwise the app will fail to start, which is intended.

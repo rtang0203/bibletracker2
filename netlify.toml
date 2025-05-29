@@ -1,0 +1,13 @@
+[build]
+  command = "pip install -r requirements.txt && FLASK_APP=run:app flask db upgrade"
+  publish = "app/static" 
+  functions = "netlify/functions"
+
+[build.environment]
+  PYTHON_VERSION = "3.9" 
+  FLASK_CONFIG_TYPE = "production" 
+
+[[redirects]]
+  from = "/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200 
