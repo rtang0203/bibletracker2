@@ -1,4 +1,7 @@
 # Application entry point 
+from dotenv import load_dotenv
+load_dotenv() # Load environment variables from .env file, must be called before create_app
+
 from app import create_app
 import os # Import os to check environment variables
 
