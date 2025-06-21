@@ -30,7 +30,7 @@ ENV/
 .venv/
 
 # Environment variables
-.env
+.env*
 
 # Flask stuff
 instance/
@@ -64,3 +64,4 @@ coverage.xml
 *.cover
 .hypothesis/
 .pytest_cache/ 
+.vercel
