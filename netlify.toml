@@ -4,9 +4,9 @@
   functions = "netlify/functions"
 
 [build.environment]
-  PYTHON_VERSION = "3.9" 
-  FLASK_ENV = "production"
+  FLASK_ENV = "production" 
   FLASK_CONFIG_TYPE = "production" 
+  PYTHON_VERSION = "3.11"
 
 [[redirects]]
   from = "/*"
