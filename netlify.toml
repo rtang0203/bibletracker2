@@ -8,7 +8,14 @@
   FLASK_CONFIG_TYPE = "production" 
   PYTHON_VERSION = "3.11"
 
+# Serve static files from app/static
+[[redirects]]
+  from = "/static/*"
+  to = "/static/:splat"
+  status = 200
+
+# Route all other requests to the Flask app
 [[redirects]]
   from = "/*"
-  to = "/.netlify/functions/api/:splat"
+  to = "/.netlify/functions/api"
   status = 200 
