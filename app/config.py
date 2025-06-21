@@ -14,5 +14,6 @@ class DevelopmentConfig(Config):
 class ProductionConfig(Config):
     """Production configuration"""
     DEBUG = False
+    # Railway automatically provides DATABASE_URL when you add a PostgreSQL service
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
     # Ensure DATABASE_URL is set in production, otherwise the app will fail to start, which is intended.
