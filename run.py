@@ -8,6 +8,7 @@ import os # Import os to check environment variables
 # Create app instance. Configuration will be loaded based on FLASK_CONFIG_TYPE in create_app.
 app = create_app()
 
+# For Vercel serverless functions
 if __name__ == '__main__':
     # The DEBUG variable from the loaded config will control the debug mode.
     # For local development, you might set FLASK_CONFIG_TYPE=development (or leave it unset)
