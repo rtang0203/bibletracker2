@@ -6,6 +6,7 @@ from flask_login import LoginManager
 from flask_wtf.csrf import CSRFProtect
 from flask_migrate import Migrate
 import os
+import sys
 
 # Initialize extensions
 db = SQLAlchemy()
@@ -25,12 +26,9 @@ def create_app(config_class=None):
         app.config.from_object('app.config.ProductionConfig')
     elif config_type == 'development':
         app.config.from_object('app.config.DevelopmentConfig')
-    else: # Fallback or if a specific class is passed (e.g. for testing)
-        if config_class:
-            app.config.from_object(config_class)
-        else:
-            # Default to DevelopmentConfig if FLASK_CONFIG_TYPE is invalid and no class is passed
-            app.config.from_object('app.config.DevelopmentConfig')
+    else:
+        # Default to DevelopmentConfig if FLASK_CONFIG_TYPE is invalid and no class is passed
+        app.config.from_object('app.config.DevelopmentConfig')
 
     # Initialize extensions with app
     db.init_app(app)

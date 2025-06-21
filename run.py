@@ -1,6 +1,12 @@
 # Application entry point 
 from dotenv import load_dotenv
-load_dotenv() # Load environment variables from .env file, must be called before create_app
+import os
+
+# Load .env.development.local for local development with production DB, otherwise load .env
+if os.path.exists('.env.development.local'):
+    load_dotenv(dotenv_path='.env.development.local')
+else:
+    load_dotenv()
 
 from app import create_app
 import os # Import os to check environment variables
