@@ -5,7 +5,11 @@ Run this with: python migrate.py
 """
 
 import os
+from dotenv import load_dotenv
 from app import create_app, db
+
+# Load environment variables from .env file
+load_dotenv()
 
 def run_migrations():
     # Set production config
