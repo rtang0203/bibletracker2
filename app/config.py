@@ -2,12 +2,6 @@
 import os
 from urllib.parse import urlparse, urlunparse, parse_qs, urlencode
 
-# Get the absolute path of the instance folder
-basedir = os.path.abspath(os.path.dirname(__file__))
-instance_path = os.path.join(os.path.dirname(basedir), 'instance')
-if not os.path.exists(instance_path):
-    os.makedirs(instance_path)
-
 class Config:
     """Base config class"""
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'dev-key-please-change-in-production'
@@ -16,7 +10,7 @@ class Config:
 class DevelopmentConfig(Config):
     """Development configuration"""
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = f'sqlite:///{os.path.join(instance_path, "bible_reading_app.db")}'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///bible_reading_app.db'
 
 class ProductionConfig(Config):
     """Production configuration"""

@@ -18,17 +18,20 @@ login_manager.login_view = 'auth.login'  # Where to redirect if user is not logg
 login_manager.login_message = 'Please log in to access this page.'
 
 def create_app(config_class=None):
-    app = Flask(__name__)
+    app = Flask(__name__, instance_relative_config=True)
     
     # Load configuration based on FLASK_CONFIG_TYPE environment variable
     config_type = os.environ.get('FLASK_CONFIG_TYPE', 'development') # Default to development
     if config_type == 'production':
         app.config.from_object('app.config.ProductionConfig')
-    elif config_type == 'development':
-        app.config.from_object('app.config.DevelopmentConfig')
     else:
-        # Default to DevelopmentConfig if FLASK_CONFIG_TYPE is invalid and no class is passed
         app.config.from_object('app.config.DevelopmentConfig')
+        # Ensure the instance folder exists for development.
+        # This is where the SQLite database will be stored.
+        try:
+            os.makedirs(app.instance_path)
+        except OSError:
+            pass # Already exists
 
     # Initialize extensions with app
     db.init_app(app)
