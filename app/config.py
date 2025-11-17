@@ -36,5 +36,7 @@ class ProductionConfig(Config):
         new_query = urlencode(filtered_params, doseq=True)
         SQLALCHEMY_DATABASE_URI = urlunparse(parsed_url._replace(query=new_query))
     
+    # how does supabase integrate with vercel automatically and insert the password into the database?
+
     # Ensure a database URL is set in production
     # Ensure DATABASE_URL is set in production, otherwise the app will fail to start, which is intended.
