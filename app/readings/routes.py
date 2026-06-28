@@ -7,7 +7,6 @@ from app import db
 from ..models import ReadingEntry, Group, group_members
 from . import readings_bp
 from .forms import DailyReadingForm, EmptyForm
-from flask_wtf.csrf import generate_csrf # Needed for CSRF token in the template
 
 @readings_bp.route('/')
 @login_required
