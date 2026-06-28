@@ -16,3 +16,13 @@ Branch: `auto-improve/2026-06-28`
 - Post-edit: same → PASS
 
 **Commit:** 67e712a
+
+---
+
+### fix: remove unauthenticated /auth/test debug route
+
+- **What:** Deleted the `/test` route and `test()` function from `app/auth/routes.py`. This route returned a bare string "Auth blueprint is working" with no authentication required.
+- **Why:** Debug artifact with no production purpose. No templates, tests, or JS link to `/auth/test`. Unauthenticated routes that leak internal structure should be removed.
+- **Files:** `app/auth/routes.py`
+- **Gate:** Baseline PASS → Post-edit PASS (`python3 -m py_compile app/auth/routes.py`)
+- **Commit:** `9d2424d`
