@@ -54,7 +54,3 @@ def register():
         return redirect(url_for('auth.login'))
     
     return render_template('auth/register.html', title='Register', form=form)
-
-@auth_bp.route('/test')
-def test():
-    return "Auth blueprint is working"
